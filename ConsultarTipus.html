@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	
+	<!--<link rel="stylesheet" type="text/css" href="datatables.min.css">-->
+	<!--<link rel="stylesheet" type="text/css" href="htpps://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">	-->
+	
+	<!--<style>
+	.toolbar {
+		float: left;
+	}
+	</style>-->
+	
+	
+	<!--**********************-->
+<!--	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/af-2.3.7/b-2.0.1/cr-1.5.5/date-1.1.1/fc-4.0.1/fh-3.2.0/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.11.3/af-2.3.7/b-2.0.1/cr-1.5.5/date-1.1.1/fc-4.0.1/fh-3.2.0/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.js"></script>-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/af-2.3.7/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/cr-1.5.5/date-1.1.1/fc-4.0.1/fh-3.2.0/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.css"/>
+ 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.11.3/af-2.3.7/b-2.0.1/b-colvis-2.0.1/b-html5-2.0.1/b-print-2.0.1/cr-1.5.5/date-1.1.1/fc-4.0.1/fh-3.2.0/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.0/sp-1.4.0/sl-1.3.3/datatables.min.js"></script>
+
+
+
+	
+	<!--***********-->
+	<!--<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>-->
+	<!--<script type="text/javascript" charset="utf8" src="datatables.min.js"></script>-->
+	<!--<script src="https://cdn.datatables.net/fixedheader/3.2.0/js/dataTables.fixedHeader.min.js"></script>
+	<script src="https://cdn.datatables.net/colreorder/1.5.2/js/dataTables.colReorder.min.js"></script> -->
+		
+	<script type="text/javascript" charset="utf8">
+	
+		$(document).ready(function() {
+		   $.ajax({
+				type: "GET",
+				url:"https://sheets.googleapis.com/v4/spreadsheets/1L8usocSXMmlQxGApgR2GS5Zy4vtjySS8LBYtjYU8teE/values/2:2000?alt=json&key=AIzaSyAadG2hpDcpPtrhQ0yp9wcN764KS0C4HbI+",
+				dataType: "json",
+			
+				success: function(data) {
+					processData(data.values);
+				},
+				error: function(xhr, status, error) {
+					
+					alert (xhr.responseText.values);
+					processData(JSON.parse(xhr.responseText.values));
+			}
+			 });
+			 
+		});
+
+		function processData(allText) {
+			var lines = [];
+		  
+			for (var i=0; i<allText.length; i++) {
+				 var tarr = [];
+				 for (var j=0; j<8; j++) {
+				
+							tarr[j] = allText[i][j];
+							
+				}
+				
+							if (allText[i][7]=='TRUE') 
+								{tarr[7] = 'Centralitzada'; }
+								else {tarr[7] = ''; }
+							if (allText[i][8])  {tarr[8] = 'Barcelona Comarques' + ' (' + allText[i][8] + '), '; }
+									else  {tarr[8] = '';}
+							if (allText[i][9])  {tarr[8] = tarr[8] + ' Baix Llobregat' + ' (' + allText[i][9] + '), '; }
+							if (allText[i][10]) {tarr[8] = tarr[8] + ' Catalunya Central' + ' (' + allText[i][10] + '), '; }
+							if (allText[i][11]) {tarr[8] = tarr[8] + " Consorci d'Educació de Barcelona" + ' (' + allText[i][11] + '), '; }
+							if (allText[i][12]) {tarr[8] = tarr[8] + " Girona" + ' (' + allText[i][12] + '), '; }
+							if (allText[i][13]) {tarr[8] = tarr[8] + " Lleida" + ' (' + allText[i][13] + '), '; }
+							if (allText[i][14]) {tarr[8] = tarr[8] + " Maresme-Vallès Oriental" + ' (' + allText[i][14] + '), '; }
+							if (allText[i][15]) {tarr[8] = tarr[8] + " Tarragona" + ' (' + allText[i][15] + '), '; }
+							if (allText[i][16]) {tarr[8] = tarr[8] + " Terres de l'Ebre" + ' (' + allText[i][16] + '), '; }
+							if (allText[i][17]) {tarr[8] = tarr[8] + " Vallès Occidental" + ' (' + allText[i][17] + ')'; }
+							
+							if (allText[i][18]=='TRUE') {tarr[9] = "1T, ";}
+								else {tarr[9] = ''; }
+							if (allText[i][19]=='TRUE') {tarr[9] = tarr[9] + "2T, ";}
+							if (allText[i][20]=='TRUE') {tarr[9] = tarr[9] + "3T";}
+							
+							lines.push(tarr);
+							
+						
+			}
+			
+			  $('#example thead tr')
+				.clone(true)
+				.addClass('filters')
+				.appendTo('#example thead');
+			
+			 $('#example').DataTable( {
+				data: lines,
+				columns: [
+					{ title: "INSTITUCIO" },
+					{ title: "CODI TIPUS ACTIVITAT" },
+					{ title: "TIPUS ACTIVITAT" },
+					{ title: "MODALITAT" },            
+					{ title: "NIVELL" },
+					{ title: "HORES" },
+					{ title: "CORREU DE CONTACTE" },
+					{ title: "GESTIÓ" },
+					{ title: "SERVEIS TERRITORIALS" },	
+					{ title: "TRIMESTRE" }	
+						],
+				"render": function ( data, type, row, meta ) {
+							return '<a href="'+data+'">Download</a>';
+						},
+				"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+				"dom": '<"toolbar">frtip',
+				"language": {
+					"url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/ca.json"
+					},
+				orderCellsTop: true,
+				fixedHeader: true,
+				initComplete: function () {
+					var api = this.api();
+		 
+					// For each column
+					api
+						.columns()
+						.eq(0)
+						.each(function (colIdx) {
+							// Set the header cell to contain the input element
+							var cell = $('.filters th').eq(
+								$(api.column(colIdx).header()).index()
+							);
+							var title = $(cell).text();
+							$(cell).html('<input type="text" placeholder="' + title + '" />');
+		 
+							// On every keypress in this input
+							$(
+								'input',
+								$('.filters th').eq($(api.column(colIdx).header()).index())
+							)
+								.off('keyup change')
+								.on('keyup change', function (e) {
+									e.stopPropagation();
+		 
+									// Get the search value
+									$(this).attr('title', $(this).val());
+									var regexr = '({search})'; //$(this).parents('th').find('select').val();
+		 
+									var cursorPosition = this.selectionStart;
+									// Search the column for that value
+									api
+										.column(colIdx)
+										.search(
+											this.value != ''
+												? regexr.replace('{search}', '(((' + this.value + ')))')
+												: '',
+											this.value != '',
+											this.value == ''
+										)
+										.draw();
+		 
+									$(this)
+										.focus()[0]
+										.setSelectionRange(cursorPosition, cursorPosition);
+								});
+						});
+				}		
+						
+				} );
+			
+		}
+	</script>
+	
+</head>
+
+<body>
+	<div id="toolbar">
+	</div>
+
+	<table id="example" class="display" width="100%">
+	<thead>
+				<tr>
+					<th>INSTITUCIO</th>
+					<th>CODI TIPUS ACTIVITAT</th>
+					<th>TIPUS ACTIVITAT</th>
+					<th>MODALITAT</th>
+					<th>NIVELL</th>
+					<th>HORES</th>
+					<th>CORREU DE CONTACTE</th>
+					<th>GESTIÓ</th>
+					<th>SERVEIS TERRITORIALS</th>
+					<th>TRIMESTRE</th>
+				</tr>
+			</thead>
+		
+	</table>
+
+</body>
+</html>
